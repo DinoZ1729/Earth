@@ -10,10 +10,10 @@ using namespace std;
 
 //screen dimensions
 
-#define WIGHT 800
+#define WIDTH 800
 #define HEIGHT 608
 
-//wight and height of each character in pixels
+//WIDTH and height of each character in pixels
 const int dW=4,dH=8;
 
 //set cursor at start to avoid flickering
@@ -32,9 +32,9 @@ int findIndex(char c,char s[])
 	return -1;
 }
 
-void drawPoint(char canvas[HEIGHT/dH][WIGHT/dW],int A,int B,char c)
+void drawPoint(char canvas[HEIGHT/dH][WIDTH/dW],int A,int B,char c)
 {
-	if(A<0||B<0||A>=WIGHT/dW||B>=HEIGHT/dH)	return;
+	if(A<0||B<0||A>=WIDTH/dW||B>=HEIGHT/dH)	return;
 	canvas[B][A]=c;
 }
 
@@ -87,9 +87,9 @@ public:
 		if(vec[2]>0)	return 0;
 		double xI=-vec[0]/vec[2];
 		double yI=-vec[1]/vec[2];
-		xI*=WIGHT/dW/2;
-		yI*=WIGHT/dH/2;
-		xI+=WIGHT/dW/2;
+		xI*=WIDTH/dW/2;
+		yI*=WIDTH/dH/2;
+		xI+=WIDTH/dW/2;
 		yI+=HEIGHT/dH/2;
 		int A=(int)xI,B=(int)yI;
 		cooInt[0]=A;
@@ -98,24 +98,24 @@ public:
 	}
 	//rendering
 	
-	void renderPoint(char canvas[HEIGHT/dH][WIGHT/dW],double tx,double ty,double tz,char c)
+	void renderPoint(char canvas[HEIGHT/dH][WIDTH/dW],double tx,double ty,double tz,char c)
 	{
 		int vec[2];
 		convert(vec,tx,ty,tz);
 		drawPoint(canvas,vec[0],vec[1],c);
 	}
 	
-	void renderSphere(char canvas[HEIGHT/dH][WIGHT/dW],double radius,double angle_offset,char earth[80][202],char earth_night[80][202])
+	void renderSphere(char canvas[HEIGHT/dH][WIDTH/dW],double radius,double angle_offset,char earth[80][202],char earth_night[80][202])
 	{
 		double light[3]={0,999999,0};	//Sun
 		//shoot the ray through every pixel
 		for(int yi=0;yi<HEIGHT/dH;yi++){
-		for(int xi=0;xi<WIGHT/dW;xi++){
+		for(int xi=0;xi<WIDTH/dW;xi++){
 			double o[3]={x,y,z};	//coordinates of the camera, origin of the ray
 			double u[3]=	//u is unit vector, direction of the ray
 			{
-			-((double)(xi-WIGHT/dW/2)+0.5)/(double)(WIGHT/dW/2)*1.2,
-			((double)(yi-HEIGHT/dH/2)+0.5)/(double)(WIGHT/dH/2),
+			-((double)(xi-WIDTH/dW/2)+0.5)/(double)(WIDTH/dW/2)*1.2,
+			((double)(yi-HEIGHT/dH/2)+0.5)/(double)(WIDTH/dH/2),
 			-1
 			};
 			transformVector(u,matrix);
@@ -190,17 +190,17 @@ int main()
 	while(1)
 	{
 		camera cam(2,0,0);
-		char canvas[HEIGHT/dH][WIGHT/dW];
+		char canvas[HEIGHT/dH][WIDTH/dW];
 		
 		for(int i=0;i<HEIGHT/dH;i++){
-		for(int j=0;j<WIGHT/dW;j++){
+		for(int j=0;j<WIDTH/dW;j++){
 			canvas[i][j]=0;
 		}}
 		
 		cam.renderSphere(canvas,1,angle_offset,earth,earth_night);
 		//display:
 		for(int i=0;i<HEIGHT/dH;i++){
-		for(int j=0;j<WIGHT/dW;j++){
+		for(int j=0;j<WIDTH/dW;j++){
 			printf("%c",canvas[i][j]);
 		}
 		printf("\n");
