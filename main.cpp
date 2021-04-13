@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include <unistd.h>
+#include <string>
 #include <windows.h>
 #include <fstream>
 #include <windows.h>
